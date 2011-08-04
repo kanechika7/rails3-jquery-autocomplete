@@ -23,6 +23,7 @@ module Rails3JQueryAutocomplete
         order          = get_autocomplete_order(method, options)
 
         search = (is_full_search ? '.*' : '^') + term + '.*'
+        model  = model.where("#{options[:current_class].to_s.underscore}_id".to_sym => options[:current_class].current.id) if options[:current_class]
         items  = model.where(method.to_sym => /#{search}/i).limit(limit).order_by(order)
       end
     end
